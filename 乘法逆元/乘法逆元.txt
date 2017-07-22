@@ -1,0 +1,68 @@
+
+
+/**
+*
+* ÇóC(N,M)%p
+*
+*
+*/
+//¿¨ÌØÀ¼Êý1 1 2 5 14 42 132 429 h(n)=h(n-1)*(4*n-2)/(n+1);h(n)=C(2n,n)/(n+1) (n=0,1,2,...)h(n)=c(2n,n)-c(2n,n-1)(n=0,1,2,...)
+#include <cstdio>
+#include <iostream>
+#include <ctime>
+#include <vector>
+#include <cmath>
+#include <map>
+#include <queue>
+#include <algorithm>
+#include <cstring>
+#include <string>
+#include <ctime>
+#include "vector"
+
+#define ll long long
+
+ll mod=1e9+7;  
+
+ll c[1010];  
+  
+void ExEuclid(ll a,ll b,ll &x,ll &y,ll &q){    
+    if(b==0){    
+        x=1;y=0;q=a;    
+        return;    
+    }    
+    ExEuclid(b,a%b,y,x,q);    
+    y-=x*(a/b);    
+}    
+
+ll inv(ll num){    
+    ll x,y,q;    
+    ExEuclid(num,mod,x,y,q);    
+    return (x+mod)%mod;    
+}  
+
+ll fab[1000010];
+ 
+ll C(ll n,ll k){  
+    ll res=fab[n]*inv(fab[k]);  
+    res%=mod;  
+    res*=inv(fab[n-k]);  
+    res%=mod;  
+    return res;  
+}  
+
+int main(){
+    fab[0]=1;  
+    for(int i=1;i<=1000000;i++){  
+        fab[i]=fab[i-1]*i;  
+        fab[i]%=mod;  
+    }  
+
+    int n,m;
+    while(cin>>n>>m){
+        int N=n+m-4;
+        int K=min(n,m)-2;
+        cout<<C(N,K)<<endl;
+    }
+    return 0;
+}
